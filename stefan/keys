@@ -14,5 +14,8 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILCTXXAd/9tK5uD5mS7d8TlElCKeYdsIlRjx5JrC78PS
 # Desktop Fujitsu
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJq+9IGL4vth4ikR3D0w4DxT57LzPId/K24dCljPm+rq user@DESKTOP-OD8OE5E
 
-# registrycache Zugang
+# Futro Backup Zugang
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7zooeJRFxzi/uGMVbfkG5wk50X3r6jXDHcpo5dXO5+ Guacamole
+
+# Registry Cache
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1JIHvnksTymYLTQcgjb1YgItiTHJCmsw3Sv6ybOh+5 registrycache guacamole
