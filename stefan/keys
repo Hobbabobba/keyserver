@@ -19,3 +19,6 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG7zooeJRFxzi/uGMVbfkG5wk50X3r6jXDHcpo5dXO5+
 
 # Registry Cache
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN1JIHvnksTymYLTQcgjb1YgItiTHJCmsw3Sv6ybOh+5 registrycache guacamole
+
+# Windows Server VM Desktop
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPOWqy436pQmFX8rmfsUDdakpfMMPIyzcgZrjwMQtVA stefan@WIN-K1G5D9Q144J
