@@ -1,5 +1,5 @@
 #!/bin/bash
-curl -sf https://raw.githubusercontent.com/Hobbabobba/keyserver/main/$1/keys
+curl -sf https://raw.githubusercontent.com/Hobbabobba/keyserver/refs/heads/main/$1/keys
 if [ $? == 0 ]; then
   exit 0
 else 
