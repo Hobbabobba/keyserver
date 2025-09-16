@@ -1,15 +1,25 @@
 name: Mirror to Gitea
-
-on: [push]
+on:
+  push:
+    branches:
+      - main  # Passe den Branch an, den du spiegeln willst
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Push to Gitea
+      # Schritt 1: Repo als Mirror klonen
+      - name: Clone repo as mirror
         run: |
-          git remote add gitea https://{{ secrets.GITEA_USER }}:${{ secrets.GITEA_TOKEN }}@git.nauheimtech.de/StefanMewes/keyserver.git
-          git push --mirror gitea
+          git clone --mirror https://github.com/Hobbabobba/keyserver.git repo
+
+      # Schritt 2: Push zum Gitea-Repo
+      - name: Push to Gitea
+        env:
+          GITEA_USER: ${{ secrets.GITEA_USER }}
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+        run: |
+          cd repo
+          git remote set-url origin https://${GITEA_USER}:${GITEA_TOKEN}@git.nauheimtech.de/StefanMewes/keyserver.git
+          git push --mirror
+
