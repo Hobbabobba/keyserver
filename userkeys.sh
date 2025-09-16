@@ -4,10 +4,10 @@
 CONNECT_TIMEOUT=2
 MAX_TIME=2
 
-# Erste URL versuchen
+# Zuerst die URL auf git.nauheimtech.de versuchen
 curl -sf --connect-timeout $CONNECT_TIMEOUT --max-time $MAX_TIME \
-    https://raw.githubusercontent.com/Hobbabobba/keyserver/refs/heads/main/$1/keys && exit 0
+    https://git.nauheimtech.de/StefanMewes/keyserver/raw/branch/main/$1/keys && exit 0
 
-# Falls die erste URL fehlschlägt, zweite URL versuchen
+# Falls die erste URL fehlschlägt, die GitHub-URL versuchen
 curl -sf --connect-timeout $CONNECT_TIMEOUT --max-time $MAX_TIME \
-    https://git.nauheimtech.de/StefanMewes/keyserver/raw/branch/main/$1/keys
+    https://raw.githubusercontent.com/Hobbabobba/keyserver/refs/heads/main/$1/keys
