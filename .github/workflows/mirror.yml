@@ -1,15 +1,20 @@
 name: Mirror to Gitea
+
 on:
   push:
     branches:
-      - main   # oder alle Branches weglassen, um alle Pushes zu spiegeln
+      - main   # oder alle Branches, wenn du ALLES spiegeln willst
 
 jobs:
   mirror:
+    # läuft nur im Quell-Repo Hobbabobba/keyserver
+    if: github.repository == 'Hobbabobba/keyserver'
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout GitHub repo
+      - name: Clone GitHub repo as bare
         run: |
+          rm -rf repo
           git clone --bare https://github.com/Hobbabobba/keyserver.git repo
 
       - name: Push all branches and tags to Gitea
@@ -19,7 +24,5 @@ jobs:
         run: |
           cd repo
           git remote add gitea https://${GITEA_USER}:${GITEA_TOKEN}@git.nauheimtech.de/StefanMewes/keyserver.git
-          # Push alle Branches
           git push gitea --all --force
-          # Push alle Tags
           git push gitea --tags --force
