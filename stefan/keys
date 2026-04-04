@@ -34,3 +34,6 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFLrrjO6JzmLU5R7c3jZoUkAlqMwSfOXVN3NKBShTFL
 
 #PBS Backup Hooks
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJ5Eo/7jYZWNSCM9/MDL9rrCHQRv7dmQvtDQyqRejTm Backuphook zt ensure
+
+# vps recovery test
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEWSL5TsvTzdrDzd10hfAW/6JdATlEhoESmrKY6Rfwwv stefan@restorevps
