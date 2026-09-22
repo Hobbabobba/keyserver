@@ -11,29 +11,35 @@ URLS=(
   "https://raw.githubusercontent.com/Hobbabobba/keyserver/refs/heads/main/$1/keys"
 )
 
+tmpdir=$(mktemp -d)
 pids=()
-tmpfiles=()
-trap 'rm -f "${tmpfiles[@]:-}"' EXIT
+trap 'kill "${pids[@]}" 2>/dev/null || true; rm -rf "$tmpdir"' EXIT
 
-for url in "${URLS[@]}"; do
-  tmp=$(mktemp)
-  tmpfiles+=("$tmp")
+# Jeder Download schreibt in eine .part-Datei, die erst nach erfolgreichem curl
+# umbenannt wird – so wird nie eine noch laufende oder abgebrochene Teilantwort ausgeliefert.
+for i in "${!URLS[@]}"; do
   (
     curl -fsS --connect-timeout "$CONNECT_TIMEOUT" --max-time "$MAX_TIME" \
-        "$url" >"$tmp" 2>/dev/null
+        "${URLS[$i]}" >"$tmpdir/$i.part" 2>/dev/null \
+      && mv "$tmpdir/$i.part" "$tmpdir/$i.ok" 2>/dev/null
   ) &
   pids+=($!)
 done
+
+# Nur Antworten mit mindestens einer Key-Zeile zählen (keine Fehler-/HTML-Seiten)
+is_keyfile() {
+  grep -Eq '^(ssh-|ecdsa-|sk-)' "$1"
+}
 
 remaining=${#pids[@]}
 while ((remaining > 0)); do
   wait -n || true
   ((remaining--)) || true
-  for tmp in "${tmpfiles[@]}"; do
-    if [[ -s "$tmp" ]]; then
-      cat "$tmp"
-      for pid in "${pids[@]}"; do kill "$pid" 2>/dev/null || true; done
-      wait 2>/dev/null || true
+  # Reihenfolge in URLS = Priorität, falls mehrere gleichzeitig fertig sind
+  for i in "${!URLS[@]}"; do
+    ok="$tmpdir/$i.ok"
+    if [[ -f "$ok" ]] && is_keyfile "$ok"; then
+      cat "$ok"
       exit 0
     fi
   done
